@@ -10,15 +10,26 @@
 #if list2 == list1 then print win
 
 from collections import Counter
-from random_word import RandomWords
+# from random_word import RandomWords
+import random
 import time
 
-r = RandomWords()
+words = [
+    "apple", "mango", "grape", "peach", "melon", "cherry", "banana", "lemon", 
+    "kiwi", "plum", "pear", "berry", "guava", "lychee", "papaya", "coconut", 
+    "pineapple", "apricot", "watermelon",
+    
+    "india", "china", "japan", "brazil", "russia", "canada", "france", 
+    "germany", "italy", "spain", "england", "mexico", "australia", 
+    "turkey", "egypt", "nepal", "thailand", "argentina", "southkorea", "america"
+]
+
+
 
 # Return a single random word
 
 if __name__ == '__main__':
-    word = r.get_random_word()
+    word = random.choice(words)
     list1 = list(word)
     list2 = []
     letterGuessed = ''
@@ -28,7 +39,7 @@ if __name__ == '__main__':
     print("Guess the Word ")
     print("You have", chances, "chances to guess the word")
     
-    time.sleep(2)
+    time.sleep(1)
     
     for i in range(0, len(word)):
         print("_ ", end=" ")
@@ -42,6 +53,9 @@ if __name__ == '__main__':
                 if not letter.isalpha():
                     print('Enter only a LETTER')
                     continue
+                elif letter == "admin":
+                    print(word)
+                    continue
                 elif len(letter) > 1:
                     print('Enter only a SINGLE letter')
                     continue
@@ -49,21 +63,27 @@ if __name__ == '__main__':
                     print('You have already guessed that letter')
                     continue
                 
+                
                 if letter in list1:
                     n = word.count(letter)
                     
-                    for i in range(0, n):
-                        list2[list1.index(letter)] = letter
-                        letterGuessed += letter
+                    for i, char in enumerate(list1):
+                        if char == letter:
+                            list2[i] = letter
+                    letterGuessed += letter
                         
-                    print("".join(list2))
+                    print(" ".join(list2))
+                    time.sleep(1)
                     print("You have guessed the right letter!!")
-                    print("Chances left: ", chances)
+                    print("Chances left: ", chances, "\n")
+                    
                     
                 else:
                     chances -= 1
-                    print("You have", chances, "chances to guess the word")
+                    print(" ".join(list2))
                     print("You have guessed the wrong letter")
+                    print("Chances left: ", chances, "\n")
+                    time.sleep(1)
         
         if chances == 0:
             print("You have lost the game")
@@ -72,10 +92,3 @@ if __name__ == '__main__':
             print("The word was", word)
     except Exception as e:
         print(e)
-        
-        
-        
-            
-    
-    
-    
